@@ -13,63 +13,59 @@ buildscript {
 }
 
 
-allprojects {
-    /// Plugins
-    // Compilation
-    apply plugin: "java"
-    apply plugin: "kotlin"
+/// Plugins
+// Compilation
+apply plugin: "java"
+apply plugin: "kotlin"
 
-    // Documentation
-    apply plugin: "org.jetbrains.dokka"
+// Documentation
+apply plugin: "org.jetbrains.dokka"
 
-    // Static analysis
-    apply plugin: "com.diffplug.gradle.spotless"
+// Static analysis
+apply from: "gradle/detekt.gradle"
+apply plugin: "com.diffplug.gradle.spotless"
 
-    /// Dependencies
-    repositories {
-        mavenCentral()
-        maven { url "https://plugins.gradle.org/m2/" }
-        maven { url "https://jitpack.io" }
+/// Dependencies
+repositories {
+    mavenCentral()
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile "com.github.cafejojo:schaapi:master-SNAPSHOT"
+
+    implementation group: "io.github.microutils", name: "kotlin-logging", version: kotlinLoggingVersion
+
+    testCompile group: "org.assertj", name: "assertj-core", version: assertjVersion
+    testCompile group: "org.jetbrains.spek", name: "spek-api", version: spekVersion
+    testRuntime group: "org.jetbrains.spek", name: "spek-junit-platform-engine", version: spekVersion
+    testCompile group: "org.junit.jupiter", name: "junit-jupiter-engine", version: junitVersion
+}
+
+/// Configuration
+// Kotlin
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+// JUnit / Spek
+test {
+    testLogging {
+        exceptionFormat = "full"
     }
 
-    dependencies {
-        compile "com.github.cafejojo:schaapi:master-SNAPSHOT"
-
-        implementation group: "io.github.microutils", name: "kotlin-logging", version: kotlinLoggingVersion
-
-        testCompile group: "org.assertj", name: "assertj-core", version: assertjVersion
-        testCompile group: "org.jetbrains.spek", name: "spek-api", version: spekVersion
-        testRuntime group: "org.jetbrains.spek", name: "spek-junit-platform-engine", version: spekVersion
-        testCompile group: "org.junit.jupiter", name: "junit-jupiter-engine", version: junitVersion
-    }
-
-    /// Configuration
-    // Kotlin
-    compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-    compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
-    }
-
-    // JUnit / Spek
-    test {
-        testLogging {
-            exceptionFormat = "full"
-        }
-
-        useJUnitPlatform() {
-            includeEngines "junit-jupiter", "spek"
-        }
-    }
-
-    // Spotless
-    spotless {
-        kotlin {
-            ktlint()
-        }
+    useJUnitPlatform() {
+        includeEngines "junit-jupiter", "spek"
     }
 }
 
-// Global config
-apply from: "gradle/detekt.gradle"
+// Spotless
+spotless {
+    kotlin {
+        ktlint()
+    }
+}
