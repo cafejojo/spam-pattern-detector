@@ -33,7 +33,7 @@ repositories {
 }
 
 dependencies {
-    compile "com.github.cafejojo:schaapi:master-SNAPSHOT"
+    compile "com.github.cafejojo:schaapi:66bcf97"
 
     implementation group: "io.github.microutils", name: "kotlin-logging", version: kotlinLoggingVersion
 
