@@ -29,11 +29,10 @@ apply plugin: "com.diffplug.gradle.spotless"
 repositories {
     mavenCentral()
     maven { url "https://plugins.gradle.org/m2/" }
-    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    compile "com.github.cafejojo:schaapi:66bcf97"
+    compile group: "org.cafejojo.schaapi", name: "models", version: schaapiVersion
 
     implementation group: "io.github.microutils", name: "kotlin-logging", version: kotlinLoggingVersion
 
