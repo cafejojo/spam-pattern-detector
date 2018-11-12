@@ -1,6 +1,5 @@
 package org.cafejojo.schaapi.miningpipeline.patterndetector.spam
 
-import org.cafejojo.schaapi.miningpipeline.Pattern
 import org.cafejojo.schaapi.models.CustomEqualsHashSet
 import org.cafejojo.schaapi.models.GeneralizedNodeComparator
 import org.cafejojo.schaapi.models.Node
